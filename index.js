@@ -4,7 +4,7 @@ let express = require("express");
 let app = express();
 let cors = require('cors');       
 
-var whitelist = ['http://localhost:3000/', 'http://localhost:3001/'];
+var whitelist = ['http://localhost:3000/', 'http://localhost:3001/',  'http://localhost:3002/'];
 
 var corsOptions = {
   origin: function(origin, callback){

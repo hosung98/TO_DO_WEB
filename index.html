@@ -11,11 +11,9 @@
   <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="fn_login()">로그인 테스트</button>
     <script>
       function fn_login() {
-        fetch('http://localhost:3000', {
-          credentials: "include", // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
-        })
+        fetch('http://127.0.0.1:3000/')
         .then((response) => response.json())
-        .then((data) => console.log("=============>" + data));
+        .then((data) => console.log(data));
       };
     </script>
   </body>
