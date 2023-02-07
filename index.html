@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Signin Template · Bootstrap v5.2</title>
+
+  <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="fn_login()">로그인 테스트</button>
+    <script>
+      function fn_login() {
+        fetch('http://localhost:3000', {
+          credentials: "include", // 클라이언트와 서버가 통신할때 쿠키와 같은 인증 정보 값을 공유하겠다는 설정
+        })
+        .then((response) => response.json())
+        .then((data) => console.log("=============>" + data));
+      };
+    </script>
+  </body>
+</html>
