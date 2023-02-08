@@ -2,10 +2,9 @@
 
 let express = require("express");
 let app = express();
+let path = require('path');
 let cors = require('cors');       
-
 var whitelist = ['http://localhost:3000/', 'http://localhost:3001/',  'http://localhost:3002/'];
-
 var corsOptions = {
   origin: function(origin, callback){
   var isWhitelisted = whitelist.indexOf(origin) !== -1;
@@ -14,6 +13,11 @@ var corsOptions = {
   },
   credentials:true
 }
+
+// bootstrap
+app.use(express.static(path.join(__dirname, 'www')));
+app.use('/js', express.static(path.join(__dirname,  'node_modules', 'bootstrap', 'dist', 'js')));
+app.use('/css', express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist', 'css')));
 
 app.use( cors(corsOptions) );  
 
