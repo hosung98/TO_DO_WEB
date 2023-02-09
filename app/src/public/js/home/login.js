@@ -28,8 +28,7 @@ function login() {
     .then((text) => {
       console.log('request succeeded with JSON response', text);
       if(text !== null) {
-        console.log('dddd');
-        fn_join();
+        console.log('succ');
       }
 
     }).catch(function (error) {
