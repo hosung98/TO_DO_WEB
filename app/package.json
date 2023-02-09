@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mybatis-mapper": "^0.6.8"
+  },
+  "name": "nodejs-login",
+  "version": "1.0.0",
+  "main": "app.js",
+  "bin": {
+    "nodejs-login": "bin/www.js"
+  },
+  "scripts": {
+    "start": "nodemon ./bin/www.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "parkdaechul",
+  "license": "MIT",
+  "keywords": [],
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
