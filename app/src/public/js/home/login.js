@@ -14,7 +14,16 @@ function login() {
     id: id.value,
     pw: password.value,
   };
-
+  
+  if(!params.id) {
+    alert("아이디를 입력하세요.");
+    return;
+  }
+  if(!params.pw) {
+    alert("비밀번호를 입력하세요.");
+    return;
+  }
+  
   let query = Object.keys(params)
               .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
               .join('&');
