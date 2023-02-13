@@ -27,9 +27,15 @@ function login() {
     .then(data => data.text())
     .then((text) => {
       console.log('request succeeded with JSON response', text);
-      if(text !== null) {
-        console.log('succ');
-      }
+      // text data가 null일 경우
+      if(text.length === 2) {
+        console.log(text.length + 'fail');
+        alert("아이디와 비밀번호가 일치하지 않습니다.");
+      }else {
+        alert("로그인 성공입니다.");
+        location.href = "/main";
+        console.log(text.length + 'succ');
+      };
 
     }).catch(function (error) {
       console.log('request failed', error)
