@@ -23,14 +23,15 @@ function login() {
     return;
   }
   
-  let query = Object.keys(params)
-              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-              .join('&');
-  let url = 'http://127.0.0.1:3000/?' + query;
+  //  let query = Object.keys(params)
+  //              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+  //              .join('&');
+  //  let url = 'http://127.0.0.1:3000/login?' + query;
+   let url = 'http://127.0.0.1:3000/login';
 
-  console.log(url);
   fetch(url, {
-    method: "GET",
+    method: "POST",
+    mode: '*', // no-cors, *cors, same-origin
     headers: {
       "Content-Type": "application/json",
     },
@@ -38,6 +39,7 @@ function login() {
   })
     .then((res) => res.json()) // json으로 읽는다.
     .then((res) => {
+      console.log("res는" +res);
       if(res.success) {
         location.href = "/main";
       }else {
