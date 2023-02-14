@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../.."
+		},
+		{
+			"path": "../../../../../../../nodejs-login"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "together"
+	}
+}
