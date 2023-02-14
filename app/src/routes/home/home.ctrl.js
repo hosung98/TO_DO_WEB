@@ -1,11 +1,5 @@
 "use strict";
 
-const process = {
-  register: (req, res) => {
-    res.render("home/register")
-  },
-};
-
 const show = {
   home: (req, res) => {
     res.render("home/index");
@@ -13,9 +7,14 @@ const show = {
   login: (req, res) => {
     res.render("home/login");
   },
+  register: (req, res) => {
+    res.render("home/register")
+  },
+  main: (req, res) => {
+    res.render("home/main")
+  },
 };
 
 module.exports = {
   show,
-  process,
 };
