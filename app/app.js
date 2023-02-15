@@ -6,6 +6,10 @@ var bodyParser = require('body-parser')
 const express = require('express');
 const app = express();
 
+
+
+
+  
 // 라우팅
 const home = require("./src/routes/home");
 
@@ -20,4 +24,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", home); // use -> 미들 웨어를 등록해주는 메서드.
 app.use(express.static(`${__dirname}/src/public`)); // app.js 가 있는 디렉토리 위치 : ${__dirname
 
+
+//URL 직접 입력 막기
+app.use((req, res, next) => {
+    if (req.method === 'GET' && req.headers.accept && req.headers.accept.indexOf('html') !== -1) {
+      // 요청이 GET이면서 Accept 헤더에 'html'이 포함되어 있을 경우에만 처리
+      res.redirect('/'); // 홈페이지로 리다이렉트
+    } else {
+      next(); // 그 외의 경우에는 다음 미들웨어로 넘김
+    }
+  });
+  
 module.exports = app; 
