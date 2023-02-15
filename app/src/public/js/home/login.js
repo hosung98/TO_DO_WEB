@@ -12,6 +12,11 @@ function login() {
     password: password.value,
   };
   
+  // 유효성 체크
+  if(!validation(req)) {
+    return false;
+  };
+
   fetch("http://127.0.0.1:3000/login", {
     method: "POST",
     headers: {
@@ -33,4 +38,13 @@ function login() {
     })
 }
 
-
+const validation = (req) => {
+  if(!req.id) {
+    alert("아이디를 입력하세요.");
+    return false;
+  }
+  if(!req.password) {
+    alert("비밀번호를 입력하세요.");
+    return false;
+  }
+};
