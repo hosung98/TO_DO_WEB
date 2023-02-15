@@ -432,6 +432,23 @@
           모달창 내용
       </div>
   <div>
-    
+
+    <div class="wrapper">
+      <header>TodoList</header>        
+      <div class="inputField">
+          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/><!--자동포커스-->
+          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+      </div>
+      <div>
+          <ul id="addTodo" class="Todolist"> 
+              <li><div id='result'></div></li>
+          </ul>
+      </div>
+      <div class="footer">
+          <button type="button" id = "allClear" onclick="allClearList()">모두 삭제</button>
+      </div>
+  </div>
+
+
 </body>
 </html>
