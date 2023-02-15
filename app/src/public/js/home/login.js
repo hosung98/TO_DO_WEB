@@ -28,6 +28,7 @@ function login() {
     .then((res) => {
       if(res.success) {
         alert("로그인에 성공하여 메인화면으로 이동합니다.");
+        localStorage.setItem("userId",req.id);
         location.href = "/main";
       }else {
         alert(res.msg);

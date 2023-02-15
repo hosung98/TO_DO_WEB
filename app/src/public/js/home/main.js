@@ -1,3 +1,34 @@
+"use strict";
+
+const userId = localStorage.getItem('userId')
+document.getElementById("userId").innerHTML = userId;
+
+const searchInfo = document.querySelector("#searchInfo");
+
+searchBtn.addEventListener("click", search);
+function search() {
+  const req = searchInfo.value;
+
+  fetch("http://127.0.0.1:3000/main", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(req),
+  })
+    .then((res) => res.json()) 
+    .then((res) => {
+      if(res.success) {
+        alert("조회성공.");
+      }else {
+        alert("조회실패");
+      };
+    })
+    .catch((err) => {
+      console.error(new Error("로그인 중 발생"));
+    })
+};
+
 document.addEventListener('DOMContentLoaded', function () {
   var modeSwitch = document.querySelector('.mode-switch');
 
@@ -8,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var listView = document.querySelector('.list-view');
   var gridView = document.querySelector('.grid-view');
   var projectsList = document.querySelector('.project-boxes');
-  
+
   listView.addEventListener('click', function () {
     gridView.classList.remove('active');
     listView.classList.add('active');
