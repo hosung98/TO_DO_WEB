@@ -13,6 +13,9 @@ const show = {
   main: (req, res) => {
     res.render("home/main")
   },
+  mypage: (req, res) => {
+    res.render("home/mypage")
+  }
 };
 
 module.exports = {
