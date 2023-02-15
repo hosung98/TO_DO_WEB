@@ -4,8 +4,8 @@ const userId = localStorage.getItem('userId')
 document.getElementById("userId").innerHTML = userId;
 
 const searchInfo = document.querySelector("#searchInfo");
+searchInfo.addEventListener("click", search);
 
-searchBtn.addEventListener("click", search);
 function search() {
   const req = searchInfo.value;
 
@@ -20,6 +20,7 @@ function search() {
     .then((res) => {
       if(res.success) {
         alert("조회성공.");
+        //document.getElementById("project-box-wrapper1").style.display = 'none';
       }else {
         alert("조회실패");
       };
@@ -28,6 +29,24 @@ function search() {
       console.error(new Error("로그인 중 발생"));
     })
 };
+
+window.onload = function() {
+ 
+  function onClick() {
+      document.querySelector('.modal_wrap').style.display ='block';
+      document.querySelector('.black_bg').style.display ='block';
+  }   
+  function offClick() {
+      document.querySelector('.modal_wrap').style.display ='none';
+      document.querySelector('.black_bg').style.display ='none';
+  }
+
+  document.getElementById('modal_btn').addEventListener('click', onClick);
+  document.querySelector('.modal_close').addEventListener('click', offClick);
+
+};
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
   var modeSwitch = document.querySelector('.mode-switch');

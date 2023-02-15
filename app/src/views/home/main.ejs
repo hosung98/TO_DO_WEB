@@ -9,6 +9,8 @@
   <title>Document</title>
 </head>
 <body>
+
+
   <div class="app-container">
     <div class="app-header">
       <div class="app-header-left">
@@ -92,7 +94,7 @@
                 <line x1="3" y1="12" x2="3.01" y2="12" />
                 <line x1="3" y1="18" x2="3.01" y2="18" /></svg>
             </button>
-            <button class="view-btn grid-view active" title="Grid View">
+            <button id = "modal_btn" class="view-btn grid-view active" title="Grid View">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
                 <rect x="3" y="3" width="7" height="7" />
                 <rect x="14" y="3" width="7" height="7" />
@@ -102,7 +104,7 @@
           </div>
         </div>
         <div class="project-boxes jsGridView">
-          <div class="project-box-wrapper">
+          <div id="project-box-wrapper1" class="project-box-wrapper">
             <div class="project-box" style="background-color: #fee4cb;">
               <div class="project-box-header">
                 <span>December 10, 2020</span>
@@ -142,7 +144,7 @@
           </div>
         </div>
       </div>
-      <div class="project-box-wrapper">
+      <div class="project-box-wrapper" id="project-box-wrapper">
         <div class="project-box" style="background-color: #e9e7fd;">
           <div class="project-box-header">
             <span>December 10, 2020</span>
@@ -422,6 +424,31 @@
   </div>
   </div>
   </div>
+
+  <div class="black_bg"></div>
+  <div class="modal_wrap">
+      <div class="modal_close"><a href="#">close</a></div>
+      <div>
+          모달창 내용
+      </div>
+  <div>
+
+    <div class="wrapper">
+      <header>TodoList</header>        
+      <div class="inputField">
+          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/><!--자동포커스-->
+          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+      </div>
+      <div>
+          <ul id="addTodo" class="Todolist"> 
+              <li><div id='result'></div></li>
+          </ul>
+      </div>
+      <div class="footer">
+          <button type="button" id = "allClear" onclick="allClearList()">모두 삭제</button>
+      </div>
+  </div>
+
 
 </body>
 </html>
