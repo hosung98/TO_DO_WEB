@@ -12,6 +12,11 @@ function login() {
     password: password.value,
   };
   
+  // 유효성 체크
+  if(!validation(req)) {
+    return false;
+  };
+
   fetch("http://127.0.0.1:3000/login", {
     method: "POST",
     headers: {
@@ -23,6 +28,7 @@ function login() {
     .then((res) => {
       if(res.success) {
         alert("로그인에 성공하여 메인화면으로 이동합니다.");
+        localStorage.setItem("userId",req.id);
         location.href = "/main";
       }else {
         alert(res.msg);
@@ -33,4 +39,14 @@ function login() {
     })
 }
 
-
+const validation = (req) => {
+  if(!req.id) {
+    alert("아이디를 입력하세요.");
+    return false;
+  }
+  if(!req.password) {
+    alert("비밀번호를 입력하세요.");
+    return false;
+  }
+  return true;
+};
