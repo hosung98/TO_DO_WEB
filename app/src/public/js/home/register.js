@@ -21,30 +21,49 @@ function sign() {
     return false;
   };
 
-  console.log("성공");
-  fetch("http://127.0.0.1:3000/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(req),
+  let params = {
+    "id": id.value,
+  };
+
+  let query = Object.keys(params)
+               .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+               .join('&');
+
+  let url = 'http://127.0.0.1:3000/register?' + query;
+
+  fetch(url, {
+    method: "GET",
   })
-    .then((res) => res.json()) 
-    .then((res) => {
-      if(res.success) {
-        alert("회원가입에 성공하여 로그인화면으로 이동합니다.");
-        location.href = "/";
+  .then((res) => res.json())
+  .then((res) => {
+      if(res[0].cnt < 1) {
+        fetch("http://127.0.0.1:3000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(req),
+        })
+          .then((res) => res.json()) 
+          .then((res) => {
+            if(res.success) {
+              swal("회원가입에 성공하여 로그인화면으로 이동합니다.");
+              location.href = "/";
+            }else {
+              swal(res.msg);
+            };
+          })
+          .catch((err) => {
+            console.error(new Error("회원가입 중 발생"));
+          })
       }else {
-        alert(res.msg);
+        swal("이미 등록된 ID입니다.");
       };
-    })
-    .catch((err) => {
-      console.error(new Error("회원가입 중 발생"));
-    })
+  }); 
 }
 
 const validation = (req) => {
-  console.log(req);
+
   if(!req.id) {
     alert("아이디를 입력하세요.");
     return false;

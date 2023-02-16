@@ -8,6 +8,8 @@ const searchInfoData = document.querySelector("#search-info");
 const regBtn = document.querySelector("#regBtn");
 const resultInfo = document.querySelector("#result");
 const sibebarAlert = document.querySelector(".app-sidebar");
+const inputField = document.querySelector(".inputField");
+const footer = document.querySelector(".footer");
 
 searchInfo.addEventListener("click", search);
 regBtn.addEventListener("click", reg);
@@ -22,20 +24,36 @@ const projectBox4 = document.querySelector("#project-box-wrapper4");
 const projectBox5 = document.querySelector("#project-box-wrapper5");
 const projectBox6 = document.querySelector("#project-box-wrapper6");
 
-projectBox1.style.display = 'none';
-projectBox2.style.display = 'none';
-projectBox3.style.display = 'none';
-projectBox4.style.display = 'none';
-projectBox5.style.display = 'none';
-projectBox6.style.display = 'none';
+const addTodoList = document.querySelector(".addTodo");
+const readTodoList = document.querySelector(".Read-Todolist");
+
+readTodoList.style.display ='none';
+
+projectBox1.addEventListener("click", detailSearch);
+
+const dateContent = document.querySelector(".time");
+
+let today = new Date();
+let year = today.getFullYear(); 
+let month = today.getMonth() + 1
+let date = today.getDate(); // 일
+
+dateContent.innerHTML = year + "년 " +month + "월 " + date + "일";
+
+search();
 
 function search() {
   let params = {
     "searchVal": searchInfoData.value,
   };
+  if(params == null) {
+    params.searchVal = "";
+  }
+  
   let query = Object.keys(params)
                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
                .join('&');
+
   let url = 'http://127.0.0.1:3000/findContent?' + query;
 
   fetch(url, {
@@ -45,28 +63,22 @@ function search() {
   .then((res) => {
       if(res.success) {
         dataList.push(res.content);
+        
         for(let i=0; i < dataList[0].length; i++) {
-          if(i == 0 ) {
-            projectBox1.style.display = 'block';
-          }else if(i == 1) {
-            projectBox2.style.display = 'block';
-          }else if(i == 2) {
-            projectBox3.style.display = 'block';
-          }else if(i == 3) {
-            projectBox4.style.display = 'block';
-          }else if(i == 4) {
-            projectBox5.style.display = 'block';
-          } else {
-            projectBox6.style.display = 'block';
-          }
+          projectBox2.style.visibility ='hidden';
+          projectBox3.style.visibility ='hidden';
+          projectBox4.style.visibility ='hidden';
+          projectBox5.style.visibility ='hidden';
+          projectBox6.style.visibility ='hidden';
         }
         
         
       }else {
-        alert(res.msg);
+        swal(res.msg);
       };
   });
 }
+
 function reg() {
   let sendData = {};
   let dataList = [];
@@ -191,28 +203,6 @@ function deleteList(e){ //삭제 버튼(x) 클릭시
     removeOne.remove();
 }
 
-function addTodo(){
-
-  if(addValue.value==false){     /*''도 가능 */
-    swal('내용을 입력하세요!');
-  }else{
-    let list = document.createElement("li");
-    let del = document.createElement('button');
-    list.innerHTML = addValue.value;
-    result.appendChild(list); //추가된 할일에 할일 리스트 추가하기
-    list.appendChild(del);    //할일 리스트 추가시 삭제버튼도 추가    
-    del.innerText = "x";      //삭제버튼에 들어갈 'x'자 문자
-    del.style.fontSize = "20px";
-    del.style.border = "none";
-    del.style.float = "right";
-    del.style.right = "17px";
-    del.style.marginTop = "10px";
-    del.style.cursor = "pointer";
-    del.addEventListener("click", deleteList); //삭제버튼 클릭시 리스트지우기 이벤트 실행
-    del.style.position='relative';
-  }
-}
-
 function allClearList(e){
   if(confirm("정말 삭제하시겠습니까?")==true){   //취소메시지가 true(ok)일때
       if(result.innerText==''){                      //목록칸이 비어있다면
@@ -227,4 +217,20 @@ function allClearList(e){
 
 function sibebarFunction() {
   swal("개발진행중입니다. ckm... ing...");
+}
+
+function detailSearch() {
+  console.log(dataList);
+  addTodoList.style.display ='none';
+  readTodoList.style.display ='block';
+  inputField.style.display = 'none';
+  footer.style.display = 'none';
+
+  var ul_list = $("#Read-Todo"); 
+  for(let i=0, j=dataList[0].length; i < j; i++) {
+    ul_list.append("<li>" + dataList[0][i].CONTENT + "</li>"); 
+  }
+
+  document.querySelector('.modal_wrap').style.display ='block';
+  document.querySelector('.black_bg').style.display ='block';
 }
