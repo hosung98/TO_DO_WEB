@@ -4,7 +4,10 @@ const userId = localStorage.getItem('userId')
 document.getElementById("userId").innerHTML = userId;
 
 const searchInfo = document.querySelector("#searchInfo");
+const regBtn = document.querySelector("#regBtn");
+const resultInfo = document.querySelector("#result");
 searchInfo.addEventListener("click", search);
+regBtn.addEventListener("click", reg);
 
 function search() {
   const req = searchInfo.value;
@@ -20,7 +23,7 @@ function search() {
     .then((res) => {
       if(res.success) {
         alert("조회성공.");
-        //document.getElementById("project-box-wrapper1").style.display = 'none';
+        
       }else {
         alert("조회실패");
       };
@@ -29,6 +32,47 @@ function search() {
       console.error(new Error("로그인 중 발생"));
     })
 };
+
+function reg() {
+  let sendData = {};
+  let dataList = [];
+  $("#result li").each(function( idex, element) {
+    dataList.push($(this).text());
+  })
+
+  sendData.userId = userId;
+  sendData.userNm = '박대철';
+  sendData.subject = '제목입니다.';
+  sendData.content = dataList;
+  
+  const msg = {
+    'succ' : "등록되었습니다."
+    ,'fail' : "등록실패했습니다."
+  }
+
+  fetch("http://127.0.0.1:3000/addBoard", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(sendData),
+  })
+    .then((res) => res.json()) 
+    .then((res) => {
+      if(res.success) {
+        swal(msg.succ)
+        .then(function(){
+          offClick();                     
+          location.href = "/main";
+        });
+      }else {
+        swal(msg.fail);
+      };
+    })
+    .catch((err) => {
+      console.error(new Error("게시판 등록 중 발생"));
+    })
+}
 
 window.onload = function() {
  
@@ -46,12 +90,11 @@ window.onload = function() {
 
 };
 
-
-
 document.addEventListener('DOMContentLoaded', function () {
   var modeSwitch = document.querySelector('.mode-switch');
 
-  modeSwitch.addEventListener('click', function () {                     document.documentElement.classList.toggle('dark');
+  modeSwitch.addEventListener('click', function() {  
+    document.documentElement.classList.toggle('dark');
     modeSwitch.classList.toggle('active');
   });
   
