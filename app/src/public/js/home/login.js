@@ -27,11 +27,14 @@ function login() {
     .then((res) => res.json()) 
     .then((res) => {
       if(res.success) {
-        alert("로그인에 성공하여 메인화면으로 이동합니다.");
-        localStorage.setItem("userId",req.id);
-        location.href = "/main";
+        swal("로그인에 성공하여 메인화면으로 이동합니다.")
+        .then(function(){
+          localStorage.setItem("userId",req.id);                       
+          location.href = "/main";
+        });
+        
       }else {
-        alert(res.msg);
+        swal(res.msg);
       };
     })
     .catch((err) => {
