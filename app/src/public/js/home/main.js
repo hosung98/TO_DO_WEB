@@ -6,18 +6,22 @@ document.getElementById("userId").innerHTML = userId;
 const searchInfo = document.querySelector("#searchInfo");
 const regBtn = document.querySelector("#regBtn");
 const resultInfo = document.querySelector("#result");
+
 searchInfo.addEventListener("click", search);
 regBtn.addEventListener("click", reg);
 
-function search() {
-  const req = searchInfo.value;
+let params = {
+  "searchVal": searchInfo.value,
+};
 
-  fetch("http://127.0.0.1:3000/main", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(req),
+let query = Object.keys(params)
+             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+             .join('&');
+let url = 'http://127.0.0.1:3000/findContent?' + query;
+
+function search() {
+  fetch(url, {
+    method: "GET",
   })
     .then((res) => res.json()) 
     .then((res) => {
@@ -29,7 +33,7 @@ function search() {
       };
     })
     .catch((err) => {
-      console.error(new Error("로그인 중 발생"));
+      console.error(new Error("조회 중 발생"));
     })
 };
 
