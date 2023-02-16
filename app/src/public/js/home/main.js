@@ -4,32 +4,32 @@ const userId = localStorage.getItem('userId')
 document.getElementById("userId").innerHTML = userId;
 
 const searchInfo = document.querySelector("#searchInfo");
+const searchInfoData = document.querySelector("#search-info");
 const regBtn = document.querySelector("#regBtn");
 const resultInfo = document.querySelector("#result");
 
 searchInfo.addEventListener("click", search);
 regBtn.addEventListener("click", reg);
 
-let params = {
-  "searchVal": searchInfo.value,
-};
-
-let query = Object.keys(params)
-             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
-             .join('&');
-let url = 'http://127.0.0.1:3000/findContent?' + query;
-
 function search() {
+  let params = {
+    "searchVal": searchInfoData.value,
+  };
+  let query = Object.keys(params)
+               .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+               .join('&');
+  let url = 'http://127.0.0.1:3000/findContent?' + query;
+
   fetch(url, {
     method: "GET",
   })
     .then((res) => res.json()) 
     .then((res) => {
       if(res.success) {
-        alert("조회성공.");
-        
+        swal("조회성공.");
+        console.log(res.json())
       }else {
-        alert("조회실패");
+        swal("조회실패");
       };
     })
     .catch((err) => {
