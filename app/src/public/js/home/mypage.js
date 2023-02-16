@@ -1,31 +1,31 @@
 "use strict";
 
-const userId = localStorage.getItem('userId')
-document.getElementById("userId").innerHTML = userId;
+window.onload = function() {
 
-const searchInfo = document.querySelector("#searchInfo");
-searchInfo.addEventListener("click", search);
+  const id = localStorage.getItem('userId');
+  let req = {
+    id : id
+  }
 
-function search() {
-  const req = searchInfo.value;
+  let query = Object.keys(req)
+             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(req[k]))
+             .join('&');
 
-  fetch("http://127.0.0.1:3000/main", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(req),
+  let url = 'http://127.0.0.1:3000/mypage?' + query;
+  
+  fetch(url, {
+    method : "GET"
   })
-    .then((res) => res.json()) 
+    .then((res) => res.json())
     .then((res) => {
-      if(res.success) {
-        alert("조회성공.");
-        //document.getElementById("project-box-wrapper1").style.display = 'none';
-      }else {
-        alert("조회실패");
-      };
+      const id = res[0].id;
+      const name = res[0].name;
+      
+      document.getElementById('id').innerHTML = id;
+      document.getElementById('name').innerHTML = name;
+    
     })
     .catch((err) => {
-      console.error(new Error("로그인 중 발생"));
+      console.error(new Error("마이페이지 오류 발생"));
     })
 };
