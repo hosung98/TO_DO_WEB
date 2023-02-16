@@ -29,7 +29,8 @@ function login() {
       if(res.success) {
         swal("로그인에 성공하여 메인화면으로 이동합니다.")
         .then(function(){
-          localStorage.setItem("userId",req.id);                       
+          localStorage.setItem("userId",req.id);  
+          localStorage.setItem("token",res.token);                       
           location.href = "/main";
         });
         

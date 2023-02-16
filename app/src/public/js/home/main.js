@@ -1,6 +1,8 @@
 "use strict";
 
 const userId = localStorage.getItem('userId')
+const token = localStorage.getItem('token');
+
 document.getElementById("userId").innerHTML = userId;
 
 const searchInfo = document.querySelector("#searchInfo");
@@ -40,12 +42,17 @@ let date = today.getDate(); // 일
 
 dateContent.innerHTML = year + "년 " +month + "월 " + date + "일";
 
-search();
+$( document ).ready(function() {
+  search();
+});
+
+
 
 function search() {
   let params = {
     "searchVal": searchInfoData.value,
   };
+
   if(params == null) {
     params.searchVal = "";
   }
@@ -58,6 +65,9 @@ function search() {
 
   fetch(url, {
     method: "GET",
+    headers: { 
+      "auth" : token,
+    }
   })
   .then((res) => res.json())
   .then((res) => {
@@ -72,7 +82,7 @@ function search() {
           projectBox6.style.visibility ='hidden';
         }
         
-        
+
       }else {
         swal(res.msg);
       };
@@ -112,7 +122,7 @@ function reg() {
           location.href = "/main";
         });
       }else {
-        swal(msg.fail);
+        //swal(msg.fail);
       };
     })
     .catch((err) => {
