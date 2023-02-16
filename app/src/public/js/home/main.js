@@ -7,9 +7,27 @@ const searchInfo = document.querySelector("#searchInfo");
 const searchInfoData = document.querySelector("#search-info");
 const regBtn = document.querySelector("#regBtn");
 const resultInfo = document.querySelector("#result");
+const sibebarAlert = document.querySelector(".app-sidebar");
 
 searchInfo.addEventListener("click", search);
 regBtn.addEventListener("click", reg);
+sibebarAlert.addEventListener("click", sibebarFunction);
+
+let dataList = [];
+
+const projectBox1 = document.querySelector("#project-box-wrapper1");
+const projectBox2 = document.querySelector("#project-box-wrapper2");
+const projectBox3 = document.querySelector("#project-box-wrapper3");
+const projectBox4 = document.querySelector("#project-box-wrapper4");
+const projectBox5 = document.querySelector("#project-box-wrapper5");
+const projectBox6 = document.querySelector("#project-box-wrapper6");
+
+projectBox1.style.display = 'none';
+projectBox2.style.display = 'none';
+projectBox3.style.display = 'none';
+projectBox4.style.display = 'none';
+projectBox5.style.display = 'none';
+projectBox6.style.display = 'none';
 
 function search() {
   let params = {
@@ -23,20 +41,32 @@ function search() {
   fetch(url, {
     method: "GET",
   })
-    .then((res) => res.json()) 
-    .then((res) => {
+  .then((res) => res.json())
+  .then((res) => {
       if(res.success) {
-        swal("조회성공.");
-        console.log(res.json())
+        dataList.push(res.content);
+        for(let i=0; i < dataList[0].length; i++) {
+          if(i == 0 ) {
+            projectBox1.style.display = 'block';
+          }else if(i == 1) {
+            projectBox2.style.display = 'block';
+          }else if(i == 2) {
+            projectBox3.style.display = 'block';
+          }else if(i == 3) {
+            projectBox4.style.display = 'block';
+          }else if(i == 4) {
+            projectBox5.style.display = 'block';
+          } else {
+            projectBox6.style.display = 'block';
+          }
+        }
+        
+        
       }else {
-        swal("조회실패");
+        alert(res.msg);
       };
-    })
-    .catch((err) => {
-      console.error(new Error("조회 중 발생"));
-    })
-};
-
+  });
+}
 function reg() {
   let sendData = {};
   let dataList = [];
@@ -193,4 +223,8 @@ function allClearList(e){
   }else{                                      //취소메시지가 false(no)일때
       return false;                           //삭제 취소
   }
+}
+
+function sibebarFunction() {
+  swal("개발진행중입니다. ckm... ing...");
 }
