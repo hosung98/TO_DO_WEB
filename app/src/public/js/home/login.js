@@ -11,13 +11,13 @@ function login() {
     id: id.value,
     password: password.value,
   };
-  
+
   // 유효성 체크
   if(!validation(req)) {
     return false;
   };
 
-  fetch("http://127.0.0.1:3000/login", {
+  fetch(serverUrl + "/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
