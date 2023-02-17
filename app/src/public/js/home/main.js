@@ -2,6 +2,7 @@
 
 const userId = localStorage.getItem('userId')
 const token = localStorage.getItem('token');
+let listArray;
 
 document.getElementById("userId").innerHTML = userId;
 
@@ -184,6 +185,7 @@ function sibebarFunction() {
 
 function detailSearch() {
   addTodoList.style.display ='none';
+
   inputField.style.display = 'none';
   footer.style.display = 'none';
 
