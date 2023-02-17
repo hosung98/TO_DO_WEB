@@ -11,7 +11,7 @@ window.onload = function() {
              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(req[k]))
              .join('&');
 
-  let url = 'http://127.0.0.1:3000/mypage?' + query;
+  let url = serverUrl + '/mypage?' + query;
   
   fetch(url, {
     method : "GET"
@@ -21,6 +21,7 @@ window.onload = function() {
       const id = res[0].id;
       const name = res[0].name;
       
+      document.getElementById('userId').innerHTML = id;
       document.getElementById('id').innerHTML = id;
       document.getElementById('name').innerHTML = name;
     
@@ -29,3 +30,7 @@ window.onload = function() {
       console.error(new Error("마이페이지 오류 발생"));
     })
 };
+
+function changeInfo() {
+  
+}

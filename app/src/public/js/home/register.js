@@ -29,7 +29,7 @@ function sign() {
                .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
                .join('&');
 
-  let url = 'http://127.0.0.1:3000/register?' + query;
+  let url = serverUrl + '/register?' + query;
 
   fetch(url, {
     method: "GET",
@@ -37,7 +37,7 @@ function sign() {
   .then((res) => res.json())
   .then((res) => {
       if(res[0].cnt < 1) {
-        fetch("http://127.0.0.1:3000/register", {
+        fetch(serverUrl + "/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
