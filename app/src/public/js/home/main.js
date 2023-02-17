@@ -26,10 +26,7 @@ const projectBox4 = document.querySelector("#project-box-wrapper4");
 const projectBox5 = document.querySelector("#project-box-wrapper5");
 const projectBox6 = document.querySelector("#project-box-wrapper6");
 
-const addTodoList = document.querySelector(".addTodo");
-const readTodoList = document.querySelector(".Read-Todolist");
-
-readTodoList.style.display ='none';
+const addTodoList = document.querySelector("#addTodo");
 
 projectBox1.addEventListener("click", detailSearch);
 
@@ -181,58 +178,12 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-const btn = document.getElementById('btn');         //버튼
-let addValue = document.getElementById('addValue'); //할일 입력
-let result = document.getElementById('result');    //추가된 할일
-
-//할일 추가시
-function addTodo(){
-    if(addValue.value==false){     /*''도 가능 */
-      alert('내용을 입력하세요!');
-    }else{
-      let list = document.createElement("li");
-      let del = document.createElement('button');
-      list.innerHTML = addValue.value;
-      result.appendChild(list); //추가된 할일에 할일 리스트 추가하기
-      list.appendChild(del);    //할일 리스트 추가시 삭제버튼도 추가    
-      del.innerText = "x";      //삭제버튼에 들어갈 'x'자 문자
-      del.style.fontSize = "20px";
-      del.style.border = "none";
-      del.style.float = "right";
-      del.style.right = "17px";
-      del.style.marginTop = "10px";
-      del.style.cursor = "pointer";
-      del.addEventListener("click", deleteList); //삭제버튼 클릭시 리스트지우기 이벤트 실행
-      del.style.position='relative';
-    }
-}
-
-//할일 목록 삭제시
-function deleteList(e){ //삭제 버튼(x) 클릭시 
-    let removeOne = e.target.parentElement;  //선택한 목록 한개만 지우기(부모 객체를 지운다)
-    removeOne.remove();
-}
-
-function allClearList(e){
-  if(confirm("정말 삭제하시겠습니까?")==true){   //취소메시지가 true(ok)일때
-      if(result.innerText==''){                      //목록칸이 비어있다면
-          alert("삭제할 목록이 없습니다");              //삭제할 목록이 없다는 경고창뜨기
-      }else{                                         //삭제할 목록이 있다면
-          result.innerText='';                       //전체 삭제
-      }
-  }else{                                      //취소메시지가 false(no)일때
-      return false;                           //삭제 취소
-  }
-}
-
 function sibebarFunction() {
   swal("개발진행중입니다. ckm... ing...");
 }
 
 function detailSearch() {
-  console.log(dataList);
   addTodoList.style.display ='none';
-  readTodoList.style.display ='block';
   inputField.style.display = 'none';
   footer.style.display = 'none';
 
@@ -243,4 +194,75 @@ function detailSearch() {
 
   document.querySelector('.modal_wrap').style.display ='block';
   document.querySelector('.black_bg').style.display ='block';
+}
+
+
+// getting all required elements
+const inputBox = document.querySelector(".inputField input");
+const addBtn = document.querySelector(".inputField button");
+const todoList = document.querySelector(".todoList");
+const deleteAllBtn = document.querySelector(".footer button");
+
+// onkeyup event
+inputBox.onkeyup = ()=>{
+  let userEnteredValue = inputBox.value; //getting user entered value
+  if(userEnteredValue.trim() != 0){ //if the user value isn't only spaces
+    addBtn.classList.add("active"); //active the add button
+  }else{
+    addBtn.classList.remove("active"); //unactive the add button
+  }
+}
+
+showTasks(); //calling showTask function
+
+addBtn.onclick = ()=>{ //when user click on plus icon button
+  let userEnteredValue = inputBox.value; //getting input field value
+  let getLocalStorageData = localStorage.getItem("New Todo"); //getting localstorage
+  if(getLocalStorageData == null){ //if localstorage has no data
+    listArray = []; //create a blank array
+  }else{
+    listArray = JSON.parse(getLocalStorageData);  //transforming json string into a js object
+  }
+  listArray.push(userEnteredValue); //pushing or adding new value in array
+  localStorage.setItem("New Todo", JSON.stringify(listArray)); //transforming js object into a json string
+  showTasks(); //calling showTask function
+  addBtn.classList.remove("active"); //unactive the add button once the task added
+}
+
+function showTasks(){
+  let getLocalStorageData = localStorage.getItem("New Todo");
+  if(getLocalStorageData == null){
+    listArray = [];
+  }else{
+    listArray = JSON.parse(getLocalStorageData); 
+  }
+  const pendingTasksNumb = document.querySelector(".pendingTasks");
+  pendingTasksNumb.textContent = listArray.length; //passing the array length in pendingtask
+  if(listArray.length > 0){ //if array length is greater than 0
+    deleteAllBtn.classList.add("active"); //active the delete button
+  }else{
+    deleteAllBtn.classList.remove("active"); //unactive the delete button
+  }
+  let newLiTag = "";
+  listArray.forEach((element, index) => {
+    newLiTag += `<li>${element}<span class="icon" onclick="deleteTask(${index})"><i class="fas fa-trash"></i></span></li>`;
+  });
+  todoList.innerHTML = newLiTag; //adding new li tag inside ul tag
+  inputBox.value = ""; //once task added leave the input field blank
+}
+
+// delete task function
+function deleteTask(index){
+  let getLocalStorageData = localStorage.getItem("New Todo");
+  listArray = JSON.parse(getLocalStorageData);
+  listArray.splice(index, 1); //delete or remove the li
+  localStorage.setItem("New Todo", JSON.stringify(listArray));
+  showTasks(); //call the showTasks function
+}
+
+// delete all tasks function
+deleteAllBtn.onclick = ()=>{
+  listArray = []; //empty the array
+  localStorage.setItem("New Todo", JSON.stringify(listArray)); //set the item in localstorage
+  showTasks(); //call the showTasks function
 }

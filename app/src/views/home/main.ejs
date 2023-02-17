@@ -9,6 +9,7 @@
   <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <title>Document</title>
 </head>
 <body>
@@ -421,24 +422,25 @@
   <div class="black_bg"></div>
   <div class="modal_wrap">
       <div class="modal_close"><a href="">close</a></div>
-      <header>TodoList</header>        
-      <div class="inputField">
-          <input type="text" id="addValue" placeholder="할 일 추가하기" autofocus/><!--자동포커스-->
-          <button type="button" id = "btn" onclick="addTodo()"><i class="xi-plus xi-2x"></i></button>
+      <div class="wrapper">
+        <header>To-Do List</header>
+        <div class="inputField">
+          <input type="text" placeholder="Add your new todo">
+          <button id="btn" onclick="addTodo()"><i class="fas fa-plus"></i></button>
+        </div>
+        <ul class="todoList" id="addTodo">
+          <li><div id='result'></div></li>
+        </ul>
+        <div class="Read-Todolist">
+          <ul id="Read-Todo" class="Todolist"> 
+           
+        </ul>
       </div>
-      <div class="addTodo">
-          <ul id="addTodo" class="Todolist"> 
-              <li><div id='result'></div></li>
-          </ul>
-      </div>
-      <div class="Read-Todolist">
-        <ul id="Read-Todo" class="Todolist"> 
-         
-      </ul>
-    </div>
-      <div class="footer">
-          <button type="button" id = "allClear" onclick="allClearList()">모두 삭제</button>
+        <div class="footer">
+          <span>You have <span class="pendingTasks"></span> pending tasks</span>
+          <button>Clear All</button>
           <button type="button" id="regBtn">등록</button>
+        </div>
       </div>
   <div>
 </body>

@@ -11,7 +11,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "bin": {
-    "nodejs-login": "bin/www.js"
+    "nodejs-login": "bin/www.js"   
   },
   "scripts": {
     "start": "nodemon ./bin/www.js",
