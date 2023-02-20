@@ -75,15 +75,15 @@
         <div class="projects-section-line">
           <div class="projects-status">
             <div class="item-status">
-              <span class="status-number">45</span>
+              <span class="status-number" id="inProgress">45</span>
               <span class="status-type">In Progress</span>
             </div>
             <div class="item-status">
-              <span class="status-number">24</span>
-              <span class="status-type">Upcoming</span>
+              <span class="status-number" id="complete">24</span>
+              <span class="status-type">Complete</span>
             </div>
             <div class="item-status">
-              <span class="status-number">62</span>
+              <span class="status-number" id="totalProject">62</span>
               <span class="status-type">Total Projects</span>
             </div>
           </div>
@@ -98,10 +98,10 @@
           </div>
         </div>
         <div class="project-boxes jsGridView">
-          <div class="project-box-wrapper" id="project-box-wrapper1">
+          <div class="project-box-wrapper" id="project-box-wrapper1" style="visibility:hidden">
             <div class="project-box" style="background-color: #fee4cb;">
               <div class="project-box-header">
-                <span>December 10, 2020</span>
+                <span id="dateInfo"></span>
                 <div class="more-wrapper">
                   <button class="project-btn-more">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
@@ -113,7 +113,7 @@
           </div>
           <div class="project-box-content-header">
             <p class="box-content-header">Web Designing</p>
-            <p class="box-content-subheader">Prototyping</p>
+            <p class="box-content-subheader">Fighting</p>
           </div>
           <div class="box-progress-wrapper">
             <p class="box-progress-header">Progress</p>
@@ -138,10 +138,10 @@
           </div>
         </div>
       </div>
-      <div class="project-box-wrapper" id="project-box-wrapper2">
+      <div class="project-box-wrapper" id="project-box-wrapper2" style="visibility:hidden">
         <div class="project-box" style="background-color: #e9e7fd;">
           <div class="project-box-header">
-            <span>December 10, 2020</span>
+            <span></span>
             <div class="more-wrapper">
               <button class="project-btn-more">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
@@ -153,7 +153,7 @@
           </div>
           <div class="project-box-content-header">
             <p class="box-content-header">Testing</p>
-            <p class="box-content-subheader">Prototyping</p>
+            <p class="box-content-subheader">Fighting</p>
           </div>
           <div class="box-progress-wrapper">
             <p class="box-progress-header">Progress</p>
@@ -178,10 +178,10 @@
           </div>
         </div>
       </div>
-      <div class="project-box-wrapper" id="project-box-wrapper3">
+      <div class="project-box-wrapper" id="project-box-wrapper3" style="visibility:hidden">
         <div class="project-box">
           <div class="project-box-header">
-            <span>December 10, 2020</span>
+            <span></span>
             <div class="more-wrapper">
               <button class="project-btn-more">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
@@ -193,7 +193,7 @@
           </div>
           <div class="project-box-content-header">
             <p class="box-content-header">Svg Animations</p>
-            <p class="box-content-subheader">Prototyping</p>
+            <p class="box-content-subheader">Fighting</p>
           </div>
           <div class="box-progress-wrapper">
             <p class="box-progress-header">Progress</p>
@@ -218,10 +218,10 @@
           </div>
         </div>
       </div>
-      <div class="project-box-wrapper" id="project-box-wrapper4">
+      <div class="project-box-wrapper" id="project-box-wrapper4" style="visibility:hidden">
         <div class="project-box" style="background-color: #ffd3e2;">
           <div class="project-box-header">
-            <span>December 10, 2020</span>
+            <span></span>
             <div class="more-wrapper">
               <button class="project-btn-more">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
@@ -233,7 +233,7 @@
           </div>
           <div class="project-box-content-header">
             <p class="box-content-header">UI Development</p>
-            <p class="box-content-subheader">Prototyping</p>
+            <p class="box-content-subheader">Fighting</p>
           </div>
           <div class="box-progress-wrapper">
             <p class="box-progress-header">Progress</p>
@@ -258,10 +258,10 @@
           </div>
         </div>
       </div>
-      <div class="project-box-wrapper" id="project-box-wrapper5">
+      <div class="project-box-wrapper" id="project-box-wrapper5" style="visibility:hidden">
         <div class="project-box" style="background-color: #c8f7dc;">
           <div class="project-box-header">
-            <span>December 10, 2020</span>
+            <span></span>
             <div class="more-wrapper">
               <button class="project-btn-more">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
@@ -273,7 +273,7 @@
           </div>
           <div class="project-box-content-header">
             <p class="box-content-header">Data Analysis</p>
-            <p class="box-content-subheader">Prototyping</p>
+            <p class="box-content-subheader">Fighting</p>
           </div>
           <div class="box-progress-wrapper">
             <p class="box-progress-header">Progress</p>
@@ -298,10 +298,10 @@
           </div>
         </div>
       </div>
-      <div class="project-box-wrapper" id="project-box-wrapper6">
+      <div class="project-box-wrapper" id="project-box-wrapper6" style="visibility:hidden">
         <div class="project-box" style="background-color: #d5deff;">
           <div class="project-box-header">
-            <span>December 10, 2020</span>
+            <span></span>
             <div class="more-wrapper">
               <button class="project-btn-more">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
@@ -313,7 +313,7 @@
           </div>
           <div class="project-box-content-header">
             <p class="box-content-header">Web Designing</p>
-            <p class="box-content-subheader">Prototyping</p>
+            <p class="box-content-subheader">Fighting</p>
           </div>
           <div class="box-progress-wrapper">
             <p class="box-progress-header">Progress</p>
@@ -351,11 +351,11 @@
       <p>Member List</p>
     </div>
     <div class="messages">
-      <div class="message-box">
+      <div class="message-box" id="message-box1" style="visibility:hidden">
         <img src="https://www.shutterstock.com/image-illustration/cartoon-genie-coming-out-gold-260nw-1278549544.jpg" alt="profile image">
         <div class="message-content">
           <div class="message-header">
-            <div class="name">parkdaechul</div>
+            <div class="name" id="message-box1-name">parkdaechul</div>
             <div class="star-checkbox">
               <input type="checkbox" id="star-1">
               <label for="star-1">
@@ -372,11 +372,11 @@
           </p>
         </div>
       </div>
-      <div class="message-box">
+      <div class="message-box" id="message-box2" style="visibility:hidden">
         <img src="https://pbs.twimg.com/profile_images/378800000438462039/feae60d8a46657c4e8d317ccd1f148ce_400x400.jpeg" alt="profile image">
         <div class="message-content">
           <div class="message-header">
-            <div class="name">KimHosung</div>
+            <div class="name" id="message-box2-name">KimHosung</div>
             <div class="star-checkbox">
               <input type="checkbox" id="star-2">
               <label for="star-2">
@@ -393,11 +393,11 @@
           </p>
         </div>
       </div>
-      <div class="message-box">
+      <div class="message-box" id="message-box3" style="visibility:hidden">
         <img src="https://t1.daumcdn.net/cfile/tistory/99B0443B5DA6B1B00F" alt="profile image">
         <div class="message-content">
           <div class="message-header">
-            <div class="name">ChoiHwanHee</div>
+            <div class="name" >ChoiHwanHee</div>
             <div class="star-checkbox">
               <input type="checkbox" id="star-3">
               <label for="star-3">
