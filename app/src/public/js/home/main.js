@@ -1,24 +1,9 @@
 "use strict";
 
-const userId = localStorage.getItem('userId')
-const token = localStorage.getItem('token');
 let listArray;
-
-document.getElementById("userId").innerHTML = userId;
-
-const searchInfo = document.querySelector("#searchInfo");
-const searchInfoData = document.querySelector("#search-info");
-const regBtn = document.querySelector("#regBtn");
-const resultInfo = document.querySelector("#result");
-const sibebarAlert = document.querySelector(".app-sidebar");
-const inputField = document.querySelector(".inputField");
-const footer = document.querySelector(".footer");
-
-searchInfo.addEventListener("click", search);
-regBtn.addEventListener("click", reg);
-sibebarAlert.addEventListener("click", sibebarFunction);
-
 let dataList = [];
+// 토큰 가져오기
+const token = localStorage.getItem('token');
 
 const projectBox1 = document.querySelector("#project-box-wrapper1");
 const projectBox2 = document.querySelector("#project-box-wrapper2");
@@ -27,26 +12,55 @@ const projectBox4 = document.querySelector("#project-box-wrapper4");
 const projectBox5 = document.querySelector("#project-box-wrapper5");
 const projectBox6 = document.querySelector("#project-box-wrapper6");
 
+// 속성 값 가져오기
+const searchInfo = document.querySelector("#searchInfo");
+const regBtn = document.querySelector("#regBtn");
+const resultInfo = document.querySelector("#result");
 const addTodoList = document.querySelector("#addTodo");
-
-projectBox1.addEventListener("click", detailSearch);
-
 const dateContent = document.querySelector(".time");
+const sibebarAlert = document.querySelector(".app-sidebar");
+const inputField = document.querySelector(".inputField");
+const footer = document.querySelector(".footer");
 
 let today = new Date();
 let year = today.getFullYear(); 
 let month = today.getMonth() + 1
 let date = today.getDate(); // 일
 
-dateContent.innerHTML = year + "년 " +month + "월 " + date + "일";
-
 $( document ).ready(function() {
-  search();
+  function onClick() {
+    document.querySelector('.modal_wrap').style.display ='block';
+    document.querySelector('.black_bg').style.display ='block';
+  }   
+  function offClick() {
+    document.querySelector('.modal_wrap').style.display ='none';
+    document.querySelector('.black_bg').style.display ='none';
+  }
+
+  document.getElementById('modal_btn').addEventListener('click', onClick);
+  document.querySelector('.modal_close').addEventListener('click', offClick);
+
+  dateContent.innerHTML = year + "년 " +month + "월 " + date + "일";
+
+  searchInfo.addEventListener("click", search);
+  regBtn.addEventListener("click", reg);
+  sibebarAlert.addEventListener("click", sibebarFunction);
+  projectBox1.addEventListener("click", detailSearch);
+
+  // 사용자ID 가져오기
+  const userId = localStorage.getItem('userId')
+  document.getElementById("userId").innerHTML = userId;
+
+  // 보드정보 조회
+  //search();
+
+  // 전체 유저 정보 조회
+  searchAllUser();
 });
 
-
-
 function search() {
+  const searchInfoData = document.querySelector("#search-info");
+
   let params = {
     "searchVal": searchInfoData.value,
   };
@@ -70,20 +84,64 @@ function search() {
   .then((res) => res.json())
   .then((res) => {
       if(res.success) {
+        let membersList = [];
         dataList.push(res.content);
-        
         for(let i=0; i < dataList[0].length; i++) {
-          projectBox2.style.visibility ='hidden';
-          projectBox3.style.visibility ='hidden';
-          projectBox4.style.visibility ='hidden';
-          projectBox5.style.visibility ='hidden';
-          projectBox6.style.visibility ='hidden';
+          membersList.push(dataList[0][i].MEMBERS_ID);
         }
-        
+        const dupArr = membersList;
+        const set = new Set(dupArr);
+        const uniqueArr = [...set];
 
       }else {
         swal(res.msg);
       };
+  });
+}
+
+function searchAllUser() {  
+  let url = 'http://127.0.0.1:3000/findUserInfo';
+
+  fetch(url, {
+    method: "GET",
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    if(res.success) {
+      let cnt = 0;
+      let userInfo = res.userInfo;
+
+      $(".project-box-wrapper").each(function(index,obj){
+        let $index = $(this);
+        let indexLength = $(this).index();
+
+        if(indexLength < userInfo.length) {
+          $index.css('visibility', 'visible');
+          $index.find('span')[0].append(year + "년 " +month + "월 " + date + "일")
+        }
+      });
+      $(".message-box").each(function(index,obj){
+        let $index = $(this);
+        let indexLength = $(this).index();
+      
+        if(indexLength < userInfo.length) {
+          $index.css('visibility', 'visible');
+          //console.log($(".message-box").children('div:eq(0)'));
+        }
+      });
+      userInfo.forEach((item) => {
+        if(item) {
+          cnt += item.BOARD_CNT;
+        }
+      })
+
+      document.querySelector('#inProgress').innerHTML = cnt;
+      document.querySelector('#complete').innerHTML = cnt;
+      document.querySelector('#totalProject').innerHTML = cnt;
+    }else {
+      swal(res.msg);
+    }
+    
   });
 }
 
@@ -127,22 +185,6 @@ function reg() {
       console.error(new Error("게시판 등록 중 발생"));
     })
 }
-
-window.onload = function() {
- 
-  function onClick() {
-      document.querySelector('.modal_wrap').style.display ='block';
-      document.querySelector('.black_bg').style.display ='block';
-  }   
-  function offClick() {
-      document.querySelector('.modal_wrap').style.display ='none';
-      document.querySelector('.black_bg').style.display ='none';
-  }
-
-  document.getElementById('modal_btn').addEventListener('click', onClick);
-  document.querySelector('.modal_close').addEventListener('click', offClick);
-
-};
 
 document.addEventListener('DOMContentLoaded', function () {
   var modeSwitch = document.querySelector('.mode-switch');
@@ -197,7 +239,6 @@ function detailSearch() {
   document.querySelector('.modal_wrap').style.display ='block';
   document.querySelector('.black_bg').style.display ='block';
 }
-
 
 // getting all required elements
 const inputBox = document.querySelector(".inputField input");
@@ -263,7 +304,7 @@ function deleteTask(index){
 }
 
 // delete all tasks function
-deleteAllBtn.onclick = ()=>{
+deleteAllBtn.onclick = () => {
   listArray = []; //empty the array
   localStorage.setItem("New Todo", JSON.stringify(listArray)); //set the item in localstorage
   showTasks(); //call the showTasks function
