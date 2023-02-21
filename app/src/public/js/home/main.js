@@ -42,7 +42,7 @@ $( document ).ready(function() {
 
   dateContent.innerHTML = year + "년 " +month + "월 " + date + "일";
 
-  searchInfo.addEventListener("click", search);
+  searchInfo.addEventListener("click", searchAllUser);
   regBtn.addEventListener("click", reg);
   sibebarAlert.addEventListener("click", sibebarFunction);
   projectBox1.addEventListener("click", detailSearch);
@@ -100,7 +100,17 @@ function search() {
 }
 
 function searchAllUser() {  
-  let url = 'http://127.0.0.1:3000/findUserInfo';
+  const searchInfoData = document.querySelector("#search-info");
+
+  let params = {
+    "searchVal": searchInfoData.value,
+  };
+
+  let query = Object.keys(params)
+               .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+               .join('&');
+
+  let url = 'http://127.0.0.1:3000/findUserInfo?' + query;
 
   fetch(url, {
     method: "GET",
@@ -110,25 +120,32 @@ function searchAllUser() {
     if(res.success) {
       let cnt = 0;
       let userInfo = res.userInfo;
+      console.log(userInfo);
 
       $(".project-box-wrapper").each(function(index,obj){
         let $index = $(this);
         let indexLength = $(this).index();
+        $index.css('visibility', 'hidden');
 
         if(indexLength < userInfo.length) {
           $index.css('visibility', 'visible');
-          $index.find('span')[0].append(year + "년 " +month + "월 " + date + "일")
+          
+          $index.find('span')[0].append(year + "년 " +month + "월 " + date + "일");
         }
       });
       $(".message-box").each(function(index,obj){
         let $index = $(this);
+        let name = $(this).find();
         let indexLength = $(this).index();
-      
+        
         if(indexLength < userInfo.length) {
+          $($index).find('p:eq(1)');
+
           $index.css('visibility', 'visible');
-          //console.log($(".message-box").children('div:eq(0)'));
+          //console.log($($index).find('p:eq(1)'));
         }
       });
+
       userInfo.forEach((item) => {
         if(item) {
           cnt += item.BOARD_CNT;
@@ -172,6 +189,7 @@ function reg() {
     .then((res) => res.json()) 
     .then((res) => {
       if(res.success) {
+        console.log(res);
         swal(msg.succ)
         .then(function(){
           offClick();                     
