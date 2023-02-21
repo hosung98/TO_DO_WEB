@@ -1,6 +1,8 @@
 "use strict";
 
 window.onload = function() {
+  document.getElementById('checkModal').style.display = 'none';
+  document.getElementById('changeModal').style.display = 'none';
 
   const id = localStorage.getItem('userId');
   let req = {
@@ -11,7 +13,7 @@ window.onload = function() {
              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(req[k]))
              .join('&');
 
-  let url = serverUrl + '/mypage?' + query;
+  let url = 'http://localhost:3000/mypage?' + query;
   
   fetch(url, {
     method : "GET"
@@ -31,6 +33,41 @@ window.onload = function() {
     })
 };
 
-function changeInfo() {
+function checkInfo() {
+  document.getElementById('checkModal').style.display = 'block';
+}
+
+function check() {
+  let pwd = document.getElementById('password').value;
+
+  let req = {
+    id : localStorage.getItem('userId'),
+    password : pwd
+  }
+
+  let query = Object.keys(req)
+             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(req[k]))
+             .join('&');
+
+  let url = 'http://localhost:3000/check?' + query;
   
+  fetch(url, {
+    method : "GET"
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if(res[0].CNT > 0){
+
+      }else{
+        alert("정보가 일치하지 않습니다.");
+        closeCheck();
+      }
+    })
+    .catch((err) => {
+      console.error(new Error("회원정보확인 오류 발생"));
+    })  
+}
+
+function closeCheck() {
+  document.getElementById('checkModal').style.display = 'none';
 }
