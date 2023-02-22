@@ -13,7 +13,7 @@ window.onload = function() {
              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(req[k]))
              .join('&');
 
-  let url = 'http://localhost:3000/mypage?' + query;
+  let url = serverUrl+'/mypage?' + query;
   
   fetch(url, {
     method : "GET"
@@ -49,25 +49,62 @@ function check() {
              .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(req[k]))
              .join('&');
 
-  let url = 'http://localhost:3000/check?' + query;
+  let url = serverUrl+'/check?' + query;
   
   fetch(url, {
     method : "GET"
   })
-    .then((res) => res.json())
-    .then((res) => {
-      if(res[0].CNT > 0){
+  .then((res) => res.json())
+  .then((res) => {
+    if(res[0].CNT > 0){
+      alert("본인 확인이 되었습니다.");
+      document.getElementById('checkModal').style.display = 'none';
+      document.getElementById('changeModal').style.display = 'block';
+    }else{
+      alert("정보가 일치하지 않습니다.");
+      closeCheck();
+    }
+  })
+  .catch((err) => {
+    console.error(new Error("회원정보확인 오류 발생"));
+  })  
+}
 
-      }else{
-        alert("정보가 일치하지 않습니다.");
-        closeCheck();
-      }
-    })
-    .catch((err) => {
-      console.error(new Error("회원정보확인 오류 발생"));
-    })  
+function changeInfo() {
+  let name = document.getElementById('changeName').value;
+
+  let req = {
+    id : localStorage.getItem('userId'),
+    name : name
+  }
+  
+  fetch(serverUrl + '/mypage', {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(req),
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    if(res.msg == "SUCESS"){
+      alert("정보가 변경되었습니다.");
+      closeChange();
+      location.href="/mypage";
+    }else{
+      alert("정보가 변경되지않았습니다.");
+    }
+  })
+  .catch((err) => {
+    console.error(new Error("개인정보 수정 중 오류발생"));
+  })    
+  
 }
 
 function closeCheck() {
   document.getElementById('checkModal').style.display = 'none';
+}
+
+function closeChange() {
+  document.getElementById('changeModal').style.display = 'none'; 
 }
